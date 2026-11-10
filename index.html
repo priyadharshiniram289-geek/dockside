@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b2a3a">
+<title>Dockside Paddle Co.</title>
+<style>
+  :root{
+    --ink:#0b2a3a;
+    --ink-soft:#4a6472;
+    --water:#1f7a8c;
+    --water-light:#e6f3f5;
+    --sun:#f2a541;
+    --paper:#fbfaf7;
+    --card:#ffffff;
+    --line:#e3e8ea;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    -webkit-font-smoothing:antialiased;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* Header */
+  header{
+    position:relative;
+    padding:28px 20px 40px;
+    background:linear-gradient(160deg,#0b2a3a 0%,#134a5e 60%,#1f7a8c 100%);
+    color:#fff;
+    overflow:hidden;
+  }
+  header::after{
+    content:"";
+    position:absolute;left:0;right:0;bottom:-1px;height:28px;
+    background:var(--paper);
+    -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+            mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'%3E%3Cpath d='M0 20 Q150 0 300 20 T600 20 T900 20 T1200 20 V40 H0Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;opacity:.85;
+  }
+  .brand svg{width:22px;height:22px}
+  h1{
+    margin-top:14px;
+    font-size:clamp(1.9rem,8vw,2.8rem);
+    line-height:1.05;
+    font-weight:800;
+    letter-spacing:-.02em;
+  }
+  h1 span{color:var(--sun)}
+  .meta{
+    margin-top:12px;
+    display:flex;flex-wrap:wrap;gap:8px;
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.92rem;
+    background:rgba(255,255,255,.12);
+    padding:7px 12px;border-radius:999px;
+    backdrop-filter:blur(4px);
+  }
+  .chip svg{width:16px;height:16px;flex:none}
+  .avatar{
+    width:22px;height:22px;border-radius:50%;
+    display:grid;place-items:center;
+    background:var(--sun);color:var(--ink);
+    font-size:.72rem;font-weight:800;
+    margin-left:-4px;
+  }
+  .chip .label{opacity:.75}
+  .chip b{font-weight:700}
+
+  /* Main */
+  main{
+    flex:1;
+    width:100%;
+    max-width:720px;
+    margin:0 auto;
+    padding:8px 16px 16px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .section-title{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
+  }
+  #count{font-variant-numeric:tabular-nums}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .card{
+    appearance:none;border:1px solid var(--line);
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:14px;
+    text-align:left;
+    font:inherit;color:inherit;
+    cursor:pointer;
+    display:flex;flex-direction:column;gap:8px;
+    transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease,background .15s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(11,42,58,.08)}
+  .card:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+  .card[aria-pressed="true"]{
+    border-color:var(--water);
+    background:var(--water-light);
+  }
+  .card:last-child:nth-child(odd){grid-column:1 / -1}
+  .icon{
+    width:40px;height:40px;border-radius:12px;
+    display:grid;place-items:center;
+    background:var(--water-light);color:var(--water);
+  }
+  .card[aria-pressed="true"] .icon{background:var(--water);color:#fff}
+  .icon svg{width:22px;height:22px}
+  .card h2{font-size:1rem;font-weight:700;line-height:1.2}
+  .tag{font-size:.78rem;color:var(--ink-soft)}
+
+  /* Detail panel */
+  .detail{
+    border-radius:var(--radius);
+    background:var(--ink);
+    color:#fff;
+    padding:16px;
+    display:flex;gap:14px;align-items:center;
+    min-height:76px;
+  }
+  .detail p{font-size:.92rem;line-height:1.45;opacity:.92}
+  .detail strong{display:block;font-size:1rem;margin-bottom:2px;opacity:1}
+  .pill{
+    flex:none;
+    font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--sun);color:var(--ink);
+    padding:6px 10px;border-radius:999px;
+  }
+
+  footer{
+    text-align:center;
+    font-size:.78rem;color:var(--ink-soft);
+    padding:4px 16px 18px;
+  }
+
+  @media (min-width:640px){
+    header{padding:40px 32px 52px}
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .card:last-child:nth-child(odd){grid-column:auto}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M2 16c2 0 2-1.5 4-1.5S8 16 10 16s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/>
+      <path d="M2 20c2 0 2-1.5 4-1.5S8 20 10 20s2-1.5 4-1.5 2 1.5 4 1.5 2-1.5 4-1.5"/>
+      <path d="M12 3v9M9 6l3-3 3 3"/>
+    </svg>
+    Paddle · Splash · Steam
+  </div>
+  <h1>Dockside <span>Paddle</span> Co.</h1>
+  <div class="meta">
+    <div class="chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>
+      </svg>
+      Grand Canal Dock, five minutes from NCI
+    </div>
+    <div class="chip">
+      <span class="avatar" id="host-initial" aria-hidden="true"></span>
+      <span class="label">Hosted by:</span> <b id="host-name"></b>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="section-title">
+    <span>On the water</span>
+    <span id="count"></span>
+  </div>
+
+  <div class="grid" id="activities" role="group" aria-label="Activities"></div>
+
+  <div class="detail" id="detail" aria-live="polite"></div>
+</main>
+
+<footer>&copy; <span id="year"></span> Dockside Paddle Co. · Grand Canal Dock</footer>
+
+<script>
+  const host = "Priyadharshini";
+
+  const icons = {
+    paddle: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="17" rx="9" ry="2.5"/><path d="M15 3l-4 12"/><path d="M14 3h3"/></svg>',
+    kayak:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c4 3 16 3 20 0-4-2-16-2-20 0z"/><path d="M5 7l14 10"/><path d="M4 6l2 2M18 16l2 2"/></svg>',
+    dragon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15h17l3-3"/><path d="M3 15c1 3 15 3 16 0"/><path d="M19 12V8l2-2"/><circle cx="7" cy="11" r="1"/><circle cx="11" cy="11" r="1"/><circle cx="15" cy="11" r="1"/></svg>',
+    wake:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18"/><path d="M12 4l-3 9"/><circle cx="9" cy="14" r="1.5"/><path d="M4 19c3-1 9-1 13-3"/><path d="M2 21c2 0 2-1 4-1s2 1 4 1"/></svg>',
+    sauna:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V11l8-5 8 5v7z"/><path d="M2 21c2 0 2-1 4-1s2 1 4 1 2-1 4-1 2 1 4 1 2-1 4-1"/><path d="M9 4c0-1 1-1 1-2M13 4c0-1 1-1 1-2"/></svg>'
+  };
+
+  const activities = [
+    { id:"sup",    name:"Paddleboards",    tag:"Stand-up · all levels", icon:"paddle",
+      level:"Beginner",
+      detail:"Glide across the calm dock basin on a stand-up board. Quick briefing, then you're off." },
+    { id:"kayak",  name:"Kayaks",          tag:"Single & double",       icon:"kayak",
+      level:"Beginner",
+      detail:"Solo or tandem kayaks for a relaxed loop of the dock and canal basin." },
+    { id:"dragon", name:"Dragon Boat",     tag:"Team session",          icon:"dragon",
+      level:"Groups",
+      detail:"Grab your crew, find the rhythm and race the length of the dock. Great for class groups." },
+    { id:"wake",   name:"Wakeboard Cable", tag:"No boat needed",        icon:"wake",
+      level:"Adventurous",
+      detail:"An overhead cable pulls you along, so you can learn to ride without a boat or a driver." },
+    { id:"sauna",  name:"Floating Sauna",  tag:"Warm up after",         icon:"sauna",
+      level:"Relax",
+      detail:"Thaw out in a wood-fired sauna that floats on the dock, then take a cold plunge if you dare." }
+  ];
+
+  document.getElementById("host-name").textContent = host;
+  document.getElementById("host-initial").textContent = host.charAt(0).toUpperCase();
+
+  const grid   = document.getElementById("activities");
+  const detail = document.getElementById("detail");
+
+  function renderDetail(a){
+    detail.innerHTML =
+      '<span class="pill">' + a.level + '</span>' +
+      '<p><strong>' + a.name + '</strong>' + a.detail + '</p>';
+  }
+
+  function select(id){
+    grid.querySelectorAll(".card").forEach(c =>
+      c.setAttribute("aria-pressed", String(c.dataset.id === id)));
+    renderDetail(activities.find(a => a.id === id));
+  }
+
+  activities.forEach(a => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "card";
+    btn.dataset.id = a.id;
+    btn.setAttribute("aria-pressed","false");
+    btn.innerHTML =
+      '<span class="icon" aria-hidden="true">' + icons[a.icon] + '</span>' +
+      '<h2>' + a.name + '</h2>' +
+      '<span class="tag">' + a.tag + '</span>';
+    btn.addEventListener("click", () => select(a.id));
+    grid.appendChild(btn);
+  });
+
+  document.getElementById("count").textContent = activities.length + " activities";
+  document.getElementById("year").textContent = new Date().getFullYear();
+  select(activities[0].id);
+</script>
+</body>
+</html>
